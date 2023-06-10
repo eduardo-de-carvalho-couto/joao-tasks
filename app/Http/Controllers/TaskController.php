@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\{TaskFormRequest, UpdateTaskRequest};
+use App\Models\Task;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+
+class TaskController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $tasks = Task::all();
+
+        return response()
+            ->json($tasks);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(TaskFormRequest $request)
+    {
+        $task = Task::create($request->all());
+
+        return response()
+            ->json($task, 201);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(int $task)
+    {
+        $taskModel = Task::find($task);
+        if ($taskModel === null) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+
+        return $taskModel;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Task $task, UpdateTaskRequest $request)
+    {
+        $task->fill($request->all());
+        $task->save();
+
+        return $task;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $task)
+    {
+        Task::destroy($task);
+
+        return response()->noContent();
+    }
+}
