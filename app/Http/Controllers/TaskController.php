@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{TaskFormRequest, UpdateTaskRequest};
+use App\Http\Requests\{StoreTaskRequest, UpdateTaskRequest};
 use App\Models\Task;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -24,7 +21,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TaskFormRequest $request)
+    public function store(StoreTaskRequest $request)
     {
         $task = Task::create($request->all());
 
