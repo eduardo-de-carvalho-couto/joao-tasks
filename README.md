@@ -65,7 +65,9 @@ Rode as migrations
 ```sh
 php artisan migrate
 ```
-
+```sh
+php artisan db:seed
+```
 
 Acesse o projeto
 [http://localhost:8989](http://localhost:8989)
