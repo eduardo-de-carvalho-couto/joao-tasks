@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\{StoreTaskRequest, UpdateTaskRequest};
 use App\Models\Task;
+use App\Repositories\TasksRepository;
 
 class TaskController extends Controller
 {
+    
+    public function __construct(private TasksRepository $repository)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +29,7 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create($request->all());
+        $task = $this->repository->add($request);
 
         return response()
             ->json($task, 201);
